@@ -1,5 +1,5 @@
 //import dbConnect from "../utils/dbConnect";
-import dbConnect from "@/utils/dbConnect";
+import dbConnect from "@/server/utils/dbConnect";
 import User from "@/server/models/User";
 
 export async function createUserWithAccount(name, email, password, imagePath) {
@@ -25,7 +25,6 @@ export async function getUserByEmail(email) {
   try {
     await dbConnect();
     const user = await User.findOne({ email });
-
     return user ? user.toObject() : null;
   } catch (error) {
     console.error("Error getting user by email: ", error);

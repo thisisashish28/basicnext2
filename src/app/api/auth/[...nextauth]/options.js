@@ -1,7 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import dbConnect from "@/utils/dbConnect";
+import dbConnect from "@/server/utils/dbConnect.js";
 import User from "@/server/models/User";
 import axios from "axios";
 import { cookies } from "next/headers";
@@ -72,8 +72,7 @@ export const options = {
               });
             });
           }
-
-          return response.data;
+          return { id: user._id, email: user.email };
         } catch (error) {
           console.error("Error during authorization:", error);
           throw new Error("An error occurred during authorization.");

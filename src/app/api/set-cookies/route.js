@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/utils/dbConnect";
+import dbConnect from "@/server/utils/dbConnect";
 import { v4 as uuidv4 } from "uuid";
 import session from "@/server/models/session";
 
