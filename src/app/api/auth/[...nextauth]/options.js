@@ -72,7 +72,12 @@ export const options = {
               });
             });
           }
-          return { id: user._id, email: user.email };
+          //console.log(response.data);
+          return {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+          };
         } catch (error) {
           console.error("Error during authorization:", error);
           throw new Error("An error occurred during authorization.");
@@ -88,7 +93,7 @@ export const options = {
   },
   callbacks: {
     async signIn({ account, profile }) {
-      console.log(account, profile);
+      // console.log(account, profile);
       if (account?.provider === "google" && profile?.email) {
         try {
           const response = await axios.post(

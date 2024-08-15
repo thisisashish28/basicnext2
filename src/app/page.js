@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -11,7 +12,11 @@ export default function Home() {
     router.push("/login");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+   const response = await axios.post("http://localhost:3000/api/log-out", {
+      email: session?.user?.email,
+    });
+    console.log(response);
     signOut();
   };
 
