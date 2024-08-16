@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { getOtp, setVerified } from '@/server/controllers/users';
+import { getOtp, setVerified } from '@/server/controllers/auth';
 
 export async function POST(req) {
   try {
@@ -11,8 +10,8 @@ export async function POST(req) {
     // Validate input
     if (!email || !otp) {
       return NextResponse.json(
-        { message: "Email and OTP are required." },
-        { status: 400 }
+        { message: 'Email and OTP are required.' },
+        { status: 400 },
       );
     }
 
@@ -20,23 +19,23 @@ export async function POST(req) {
     const storedData = await getOtp(email);
 
     if (!storedData || storedData !== otp) {
-      return NextResponse.json(
-        { message: "Invalid OTP." },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Invalid OTP.' }, { status: 400 });
     }
 
     await setVerified(email);
-    console.log("User verified successfully!");
+    console.log('User verified successfully!');
     return NextResponse.json(
-      { message: "User verified successfully!" },
-      { status: 201 }
+      { message: 'User verified successfully!' },
+      { status: 201 },
     );
   } catch (error) {
-    console.log("Error in OTP verification", error);
+    console.log('Error in OTP verification', error);
     return NextResponse.json(
-      { message: "Error", error: error.message || "An unexpected error occurred" },
-      { status: 500 }
+      {
+        message: 'Error',
+        error: error.message || 'An unexpected error occurred',
+      },
+      { status: 500 },
     );
   }
 }

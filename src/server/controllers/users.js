@@ -1,13 +1,18 @@
 //import dbConnect from "../utils/dbConnect";
-import dbConnect from "@/server/utils/dbConnect";
-import User from "@/server/models/User";
+import dbConnect from '@/server/utils/dbConnect';
+import User from '@/server/models/User';
 
-export async function createUserWithAccount(name, email, password, imagePath) {
+export async function createUserWithAccount(
+  full_name,
+  email,
+  password,
+  imagePath,
+) {
   try {
     await dbConnect();
-    console.log("Creating user with account: ", name, email, password);
+    console.log('Creating user with account: ', full_name, email, password);
     const newUser = new User({
-      name,
+      full_name,
       email,
       password,
       image: imagePath,
@@ -15,7 +20,7 @@ export async function createUserWithAccount(name, email, password, imagePath) {
 
     await newUser.save();
   } catch (error) {
-    console.error("Error creating the user: ", error);
+    console.error('Error creating the user: ', error);
     throw error;
   }
 }
@@ -27,58 +32,29 @@ export async function getUserByEmail(email) {
     const user = await User.findOne({ email });
     return user ? user.toObject() : null;
   } catch (error) {
-    console.error("Error getting user by email: ", error);
+    console.error('Error getting user by email: ', error);
     throw error;
   }
 }
 
-// OTP functions
-
-export async function setOtp(email, otp) {
+export const findUserOrCreate = async (email, full_name, image) => {
   try {
     await dbConnect();
     const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error("User not found");
+    console.log(user);
+    if (user) {
+      return user;
+    } else {
+      const newUser = new User({
+        email,
+        full_name,
+        image,
+      });
+      await newUser.save();
+      return newUser;
     }
-    if (user.isverified === true) {
-      throw new Error("User already verified");
-    }
-    user.otp = otp;
-
-    await user.save();
   } catch (error) {
-    console.error("Error setting otp: ", error);
+    console.error('Error creating the user: ', error);
     throw error;
   }
-}
-
-export async function getOtp(email) {
-  try {
-    await dbConnect();
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error("User not found");
-    }
-    return user.otp;
-  } catch (error) {
-    console.error("Error getting otp: ", error);
-    throw error;
-  }
-}
-
-export async function setVerified(email) {
-  try {
-    await dbConnect();
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error("User not found");
-    }
-    user.isverified = true;
-    user.otp = null;
-    await user.save();
-  } catch (error) {
-    console.error("Error setting verified: ", error);
-    throw error;
-  }
-}
+};

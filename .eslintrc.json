@@ -1,3 +1,28 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "eslint:recommended",
+    "plugin:@next/next/recommended",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020, // or 2021 for ES2021 features
+    "sourceType": "module", // This allows the use of `import` and `export`
+    "ecmaFeatures": {
+      "jsx": true // Allows parsing of JSX
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "console": "readonly"
+  }
 }

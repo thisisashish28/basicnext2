@@ -1,7 +1,7 @@
-"use client";
-import axios from "axios";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+'use client';
+import axios from 'axios';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -9,11 +9,11 @@ export default function Home() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push("/login");
+    router.push('/login');
   };
 
   const handleLogout = async () => {
-   const response = await axios.post("http://localhost:3000/api/log-out", {
+    const response = await axios.post('http://localhost:3000/api/log-out', {
       email: session?.user?.email,
     });
     console.log(response);
@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        {status !== "authenticated" ? (
+        {status !== 'authenticated' ? (
           <>
             <h2 className="text-2xl font-bold mb-4 text-center">
               Welcome to our website

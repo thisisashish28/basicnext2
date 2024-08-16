@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
-import { setOtp } from "@/server/controllers/users";
-import { generateOtp } from "@/server/utils";
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+import { setOtp } from '@/server/controllers/auth';
+import { generateOtp } from '@/server/utils';
 
 export async function POST(req) {
   try {
@@ -10,16 +10,15 @@ export async function POST(req) {
     // Validate input
     if (!email) {
       return NextResponse.json(
-        { message: "Name and email are required." },
-        { status: 400 }
+        { message: 'Name and email are required.' },
+        { status: 400 },
       );
     }
 
     const otp = generateOtp(4);
 
-    // Email Setup karna
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -29,7 +28,7 @@ export async function POST(req) {
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Your OTP for Sign-Up",
+      subject: 'Your OTP for Sign-Up',
       text: `Your OTP is ${otp}`,
     };
 
@@ -38,17 +37,17 @@ export async function POST(req) {
     await setOtp(email, otp);
 
     return NextResponse.json(
-      { message: "OTP sent successfully!" },
-      { status: 200 }
+      { message: 'OTP sent successfully!' },
+      { status: 200 },
     );
   } catch (error) {
-    console.log("Error in sending OTP:", error);
+    console.log('Error in sending OTP:', error);
     return NextResponse.json(
       {
-        message: "Error",
-        error: error.message || "An unexpected error occurred",
+        message: 'Error',
+        error: error.message || 'An unexpected error occurred',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

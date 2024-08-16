@@ -1,33 +1,29 @@
-"use client";
-
-import Background from "@/app/_components/Background";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import axios from "axios";
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState, FormEvent, useEffect } from "react";
-import GoogleSvg from "./_components/GoogleSvg";
+'use client';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import Background from '../(builder)/_components/Background';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import GoogleSvg from './_components/GoogleSvg';
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (status === "authenticated") {
-      const email = session?.user?.email;
-      console.log(session);
-      router.push("/");
+    if (status === 'authenticated') {
+      router.push('/');
     }
-  }, [status]);
+  }, [router, session, status]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await signIn("credentials", {
+    const result = await signIn('credentials', {
       email,
       password,
       redirect: false,
@@ -36,14 +32,14 @@ function Login() {
     if (result.ok) {
       // router.push('/');
     } else if (result?.error) {
-      setError("Invalid Email/password");
+      setError('Invalid Email/password');
     }
   };
 
   const signInwithGoogle = () => {
-    const result = signIn("google");
+    const result = signIn('google');
     console.log(result);
-    router.push("/");
+    router.push('/');
   };
 
   return (
@@ -51,7 +47,9 @@ function Login() {
       <Background>
         <div className="flex justify-center items-center">
           <div className="w-full max-w-md p-md bg-primary shadow-md rounded-lg">
-            <h1 className="text-2xl font-bold mb-md text-center">Login</h1>
+            <h2 className="text-2xl font-bold mb-md text-center">
+              Login on PageSta
+            </h2>
             {error && <p className="text-red-500 text-center mb-md">{error}</p>}
             <form onSubmit={handleSubmit} className="space-y-md">
               <div>
@@ -95,9 +93,9 @@ function Login() {
                 Login
               </Button>
               <p className="text-center text-sm text-gray-600">
-                Don't have an account?
+                Don&apos;t have an account?
                 <Link
-                  href={"/CreateAccount"}
+                  href={'/CreateAccount'}
                   className="text-secondary hover:text-secondary font-medium ml-1"
                 >
                   Sign up
