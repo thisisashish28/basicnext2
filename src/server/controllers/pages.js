@@ -56,3 +56,20 @@ export async function makePage(pageName, email) {
         throw error;
     }
 }
+
+export async function getPagesByEmail(email) {
+    try {
+        await dbConnect();
+        console.log(email);
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw new Error("User not found");
+        }
+        const userId = user._id;
+        const pages = await page.findOne({ userid: userId });
+        return pages;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

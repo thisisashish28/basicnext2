@@ -22,12 +22,13 @@ function UserModal() {
         const email = session?.user?.email;
         e.preventDefault();
         console.log(pageName, email);
-        await axios.post('/api/pagemaker-api', {name: pageName, email: email});
+      await axios.post('/api/pagemaker-api', {name: pageName, email: email});
+      
     }
   return (
     <div>
        <Dialog>
-            <DialogTrigger>+ Add Link</DialogTrigger>
+            <DialogTrigger>+ Add Your Page</DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Enter Your Details</DialogTitle>
