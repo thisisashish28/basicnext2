@@ -1,14 +1,14 @@
 // app/page/[pagename]/page.tsx
 
 "use client";
-import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 
-function Page() {
-    const { pagename } = useParams();
+function Page({params}) {
+    const { pagename } = params;
+    //console.log(params);
     const [data, setData] = useState(null);
 
     useEffect(() => {
