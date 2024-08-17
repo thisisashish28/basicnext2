@@ -1,4 +1,4 @@
-"use client";
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import React  from 'react';
@@ -17,11 +17,11 @@ function MainContent() {
             </div>
           </Card>
           <div className='pt-5'>
-            <Button className="px-4 py-2 bg-secondary 
+            <div className="px-4 py-2 bg-secondary 
             text-white font-semibold text-center rounded-lg 
             shadow-md hover:bg-hover cursor-pointer w-full">
               <UserModal />
-            </Button>
+            </div>
           </div>
         </div>
       </div>
